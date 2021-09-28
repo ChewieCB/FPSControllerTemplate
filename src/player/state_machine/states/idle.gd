@@ -31,6 +31,8 @@ func physics_process(delta: float):
 			for _input in ["p1_move_forward", "p1_move_left", "p1_move_backward", "p1_move_right"]:
 				if Input.is_action_pressed(_input):
 					_state_machine.transition_to("Movement/Walking")
+		if Input.is_action_pressed("p1_slide"):
+			_state_machine.transition_to("Movement/Crouching")
 		elif _parent.velocity.y < -0.1:
 			_state_machine.transition_to(
 				"Movement/Falling",

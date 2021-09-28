@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/player/state_machine/state_machine.gd" type="Script" id=1]
 [ext_resource path="res://src/player/state_machine/states/_movement.gd" type="Script" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://src/player/state_machine/states/sprinting.gd" type="Script" id=7]
 [ext_resource path="res://src/player/state_machine/states/jumping.gd" type="Script" id=8]
 [ext_resource path="res://src/player/state_machine/states/falling.gd" type="Script" id=9]
+[ext_resource path="res://src/player/state_machine/states/sliding.gd" type="Script" id=10]
+[ext_resource path="res://src/player/state_machine/states/crouching.gd" type="Script" id=11]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.75
@@ -34,10 +36,11 @@ height = 1.0
 albedo_color = Color( 1, 0, 0, 1 )
 
 [node name="Player" type="KinematicBody"]
+collision_mask = 3
 script = ExtResource( 3 )
 
 [node name="Head" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
 script = ExtResource( 4 )
 
 [node name="Camera" type="Camera" parent="Head"]
@@ -54,11 +57,13 @@ shape = SubResource( 2 )
 
 [node name="BodyMesh" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.4, 0 )
+visible = false
 mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+visible = false
 mesh = SubResource( 5 )
 material/0 = SubResource( 6 )
 
@@ -85,8 +90,14 @@ script = ExtResource( 8 )
 script = ExtResource( 9 )
 
 [node name="Sliding" type="Node" parent="StateMachine/Movement"]
+script = ExtResource( 10 )
+
+[node name="Crouching" type="Node" parent="StateMachine/Movement"]
+script = ExtResource( 11 )
 
 [node name="GroundCheck" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0 )
 enabled = true
 cast_to = Vector3( 0, -1.5, 0 )
+
+[node name="Tween" type="Tween" parent="."]

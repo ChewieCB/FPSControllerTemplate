@@ -1,7 +1,7 @@
 extends State
 
 export var max_speed = 55
-export var move_speed = 45
+export var move_speed = 40
 export var h_acceleration = 6
 var gravity = 90
 
@@ -34,6 +34,10 @@ func physics_process(delta: float):
 			# Jumping
 			if Input.is_action_pressed("p1_jump"):
 				_state_machine.transition_to("Movement/Jumping")
+			elif Input.is_action_just_pressed("p1_slide") and \
+			Input.is_action_pressed("p1_slide") and \
+			_parent.slide_cooldown_timer.is_stopped():
+				_state_machine.transition_to("Movement/Sliding")
 			elif Input.is_action_just_released("p1_sprint"):
 				_state_machine.transition_to("Movement/Walking")
 		# Falling

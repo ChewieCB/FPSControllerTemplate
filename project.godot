@@ -27,11 +27,16 @@ _global_script_class_icons={
 [application]
 
 config/name="FPSControllerTemplate"
+run/main_scene="res://src/test_level/TestLevel.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 GlobalFlags="*res://src/global_flags.gd"
+
+[display]
+
+window/size/fullscreen=true
 
 [input]
 

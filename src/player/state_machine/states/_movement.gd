@@ -19,6 +19,19 @@ var input_direction := Vector3.ZERO
 var move_direction := Vector3.ZERO
 var gravity_vector = Vector3()
 
+onready var slide_cooldown_timer = Timer.new()
+export var slide_cooldown = 0.1
+
+
+func _ready():
+	slide_cooldown_timer.one_shot = true
+	slide_cooldown_timer.wait_time = slide_cooldown
+	
+	if not slide_cooldown_timer.is_connected("timeout", self, "_end_slide_cooldown"):
+		slide_cooldown_timer.connect("timeout", self, "_end_slide_cooldown")
+	if not slide_cooldown_timer in get_children():
+		add_child(slide_cooldown_timer)
+
 
 func enter(msg: Dictionary = {}):
 	pass
@@ -100,4 +113,11 @@ func calculate_velocity(velocity_current: Vector3, move_direction: Vector3, delt
 	
 	return velocity_new
 
+
+func _start_slide_cooldown():
+	slide_cooldown_timer.start()
+
+
+func _end_slide_cooldown():
+	pass
 
