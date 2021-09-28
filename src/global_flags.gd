@@ -1,0 +1,10 @@
+extends Node
+
+
+var CAMERA_INVERT_X = false
+var CAMERA_INVERT_Y = false
+
+var PLAYER_CONTROLS_ACTIVE = true
+var CAMERA_CONTROLS_ACTIVE = true
+
+var LOOK_SENSITIVITY = 20
