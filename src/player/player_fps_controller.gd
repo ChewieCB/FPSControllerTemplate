@@ -7,3 +7,6 @@ onready var camera = $Head/Camera
 
 onready var ground_check = $GroundCheck
 
+onready var audio_player = null
+onready var skin = null
+

@@ -1,9 +1,14 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/player/state_machine/state_machine.gd" type="Script" id=1]
 [ext_resource path="res://src/player/state_machine/states/_movement.gd" type="Script" id=2]
 [ext_resource path="res://src/player/player_fps_controller.gd" type="Script" id=3]
 [ext_resource path="res://src/player/head.gd" type="Script" id=4]
+[ext_resource path="res://src/player/state_machine/states/idle.gd" type="Script" id=5]
+[ext_resource path="res://src/player/state_machine/states/walking.gd" type="Script" id=6]
+[ext_resource path="res://src/player/state_machine/states/sprinting.gd" type="Script" id=7]
+[ext_resource path="res://src/player/state_machine/states/jumping.gd" type="Script" id=8]
+[ext_resource path="res://src/player/state_machine/states/falling.gd" type="Script" id=9]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.75
@@ -59,10 +64,27 @@ material/0 = SubResource( 6 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 1 )
-initial_state = NodePath("Movement")
+initial_state = NodePath("Movement/Idle")
 
 [node name="Movement" type="Node" parent="StateMachine"]
 script = ExtResource( 2 )
+
+[node name="Idle" type="Node" parent="StateMachine/Movement"]
+script = ExtResource( 5 )
+
+[node name="Walking" type="Node" parent="StateMachine/Movement"]
+script = ExtResource( 6 )
+
+[node name="Sprinting" type="Node" parent="StateMachine/Movement"]
+script = ExtResource( 7 )
+
+[node name="Jumping" type="Node" parent="StateMachine/Movement"]
+script = ExtResource( 8 )
+
+[node name="Falling" type="Node" parent="StateMachine/Movement"]
+script = ExtResource( 9 )
+
+[node name="Sliding" type="Node" parent="StateMachine/Movement"]
 
 [node name="GroundCheck" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0 )

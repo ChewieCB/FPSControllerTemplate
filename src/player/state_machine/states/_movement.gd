@@ -5,10 +5,9 @@ extends State
 # This keeps the logic grouped in one location
 
 export var max_speed = 35
-export var move_speed = 28
+export var move_speed = 20
 export var h_acceleration = 6
 export var gravity = 90
-export var jump_impulse = 45
 export (float, 0.1, 20.0, 0.1) var look_speed = 8
 
 var is_full_contact = false
@@ -19,6 +18,10 @@ var velocity := Vector3.ZERO
 var input_direction := Vector3.ZERO
 var move_direction := Vector3.ZERO
 var gravity_vector = Vector3()
+
+
+func enter(msg: Dictionary = {}):
+	pass
 
 
 func physics_process(delta: float):
@@ -56,7 +59,7 @@ func physics_process(delta: float):
 	
 	if Input.is_action_just_pressed("p1_jump") and \
 	(_actor.is_on_floor() or _actor.ground_check.is_colliding()):
-		velocity.y += jump_impulse
+		_state_machine.transition_to("Movement/Jumping")
 
 	velocity = _actor.move_and_slide(velocity, Vector3.UP, true, 4, 0.785398, false)
 
